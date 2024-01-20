@@ -17,11 +17,11 @@ export default function Header() {
     { title: dictionary["perfume-men"], slug: "perfume-men" },
     { title: dictionary["perfume-women"], slug: "perfume-women" },
     { title: dictionary["perfume-unisex"], slug: "perfume-unisex" },
-    { title: dictionary["fav"], slug: "fav" },
-    { title: dictionary["stores"], slug: "stores" },
+    { title: dictionary["fav"], slug: "favorites" },
+    { title: dictionary["stores"], slug: "stores-list" },
     { title: dictionary["contact-us"], slug: "contact-us" },
     { title: dictionary["privacy-policy"], slug: "privacy-policy" },
-    { title: dictionary["terms-and-condition"], slug: "terms-and-condition" },
+    { title: dictionary["terms-and-condition"], slug: "terms-and-conditions" },
   ];
 
   return (

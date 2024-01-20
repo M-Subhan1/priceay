@@ -29,6 +29,7 @@ export const Products: CollectionConfig = {
       name: "slug",
       label: "Slug",
       type: "text",
+      index: true,
       hooks: {
         beforeValidate: [
           ({ value, siblingData }) => {
@@ -68,8 +69,26 @@ export const Products: CollectionConfig = {
       name: "variants",
       label: "Variants",
       type: "array",
+      required: true,
       minRows: 1,
       fields: [
+        {
+          name: "enabled",
+          label: "Enabled",
+          type: "radio",
+          defaultValue: "yes",
+          required: true,
+          options: [
+            {
+              label: "Yes",
+              value: "yes",
+            },
+            {
+              label: "No",
+              value: "no",
+            },
+          ],
+        },
         {
           name: "name",
           label: "Name",

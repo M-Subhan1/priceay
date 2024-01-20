@@ -16,7 +16,12 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  globals: {};
+  globals: {
+    'stores-list': StoresList;
+    'contact-us': ContactUs;
+    'privacy-policy': PrivacyPolicy;
+    'terms-and-conditions': TermsAndCondition;
+  };
 }
 export interface Product {
   id: string;
@@ -26,16 +31,14 @@ export interface Product {
   brand: string | Brand;
   gender: 'Male' | 'Female' | 'Unisex';
   productImage: string | Media;
-  variants?:
-    | {
-        name: string;
-        store?: (string | null) | Store;
-        link: string;
-        price: number;
-        sku: string;
-        id?: string | null;
-      }[]
-    | null;
+  variants: {
+    name: string;
+    store?: (string | null) | Store;
+    link: string;
+    price: number;
+    sku: string;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -115,6 +118,38 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+export interface StoresList {
+  id: string;
+  content: {
+    [k: string]: unknown;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+export interface ContactUs {
+  id: string;
+  content: {
+    [k: string]: unknown;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+export interface PrivacyPolicy {
+  id: string;
+  content: {
+    [k: string]: unknown;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+export interface TermsAndCondition {
+  id: string;
+  content: {
+    [k: string]: unknown;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 
 

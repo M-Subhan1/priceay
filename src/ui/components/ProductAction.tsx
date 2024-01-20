@@ -1,76 +1,61 @@
-"use client"
+"use client";
 
-import { Product, Store } from "@/payload/payload-types";
+import { Media, Product, Store } from "@/payload/payload-types";
 import { useTranslation } from "@/providers/translation";
 import Image from "next/image";
 import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
 
-type Variant = NonNullable<Product["variantsTab"]["variants"]>[number];
+type Variant = Product["variants"][number];
 
 interface Props {
-  variations: Variant[];
-  selectedVariantIndex: number;
-  textToCopy: string;
-  setIsVisible: any;
-  showPopup: any;
+  selectedVariant: Variant;
 }
 
-export default function ProductAction(props: Props) {
-  const { variations, selectedVariantIndex, textToCopy } = props;
-
-  const { dictionary } = useTranslation();
+export default function ProductAction({ selectedVariant }: Props) {
+  const { dictionary, lang } = useTranslation();
   const [isCopied, setIsCopied] = useState(false);
-  const [variantIndex, setVariantIndex] = useState<number>();
+
+  const store = selectedVariant?.store as Store;
+  const storeImage = store.storeImage as Media;
+  const aspectRatio = (storeImage.width || 80) / (storeImage.height || 40);
+
+  const discountCode = store?.discountCode;
 
   const copyToClipboard = async () => {
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(textToCopy);
+    if (navigator.clipboard && discountCode) {
+      await navigator.clipboard.writeText(discountCode);
       setIsCopied(true);
     }
   };
-
-  const selectedVariant = () => {
-    return variations.find((_, idx) => idx === selectedVariantIndex);
-  };
-
-  const storeImg = selectedVariant?.store as Store;
 
   return (
     <>
       <section className="border border-gray-500">
         <div className="font-IBM text-xss flex justify-between gap-0 flex-shrink-0    px-2  sm:text-sm w-full float-right bg-primaryWarning">
-          <span
-            className="font-IBM font-semibold hover:cursor-pointer underline transp"
-            onClick={() => props.showPopup("condition")}
-          >
+          <span className="font-IBM font-semibold hover:cursor-pointer underline transp">
             الشروط
           </span>
-          {selectedVariation()?.store?.data !== null
-            ? selectedVariation()?.store?.data.attributes.store_text
-            : ""}
+          {lang === "en" ? store.storeTextEnglish : store.storeTextArabic}
         </div>
         <div className="">
           <div className="flex justify-between px-5 mt-8 mb-4   sm:mb-8  sm:mt-16  ">
             <button className="brand">
               <Image
-                alt={"Store Image"}
-                src={storeImg ? storeImg : "/nice-one.png"}
-                width={80}
+                alt={`Store Image - ${store.name}`}
+                src={storeImage.url ? storeImage.url : "/nice-one.png"}
                 height={40}
+                width={aspectRatio * 40}
               />
             </button>
             <div className="flex flex-row-reverse">
-              <span className="text-xl mx-2">
-                {selectedVariation()?.price ? selectedVariation()?.price : 125}
-              </span>
+              <span className="text-xl mx-2">{selectedVariant.price}</span>
               <span className="font-bold">{dictionary["riyal"]}</span>
             </div>
           </div>
         </div>
         <hr className="bg-gray-400  seprated" />
-
         <div className="flex justify-around hover:cursor-pointer items-center  my-4">
           <div
             onClick={copyToClipboard}
@@ -89,15 +74,12 @@ export default function ProductAction(props: Props) {
               <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
             </svg>
           </div>
-          <button
-            className="hover:cursor-pointer transp"
-            onClick={() => props.showPopup("true")}
-          >
+          <button className="hover:cursor-pointer transp">
             {dictionary["more"]}
           </button>
           <button className="bg-primaryBlue text-white rounded-3xl  p-2">
             <Link
-              href={selectedVariant ? variation.link : "#"}
+              href={selectedVariant ? selectedVariant.link : "#"}
               target="_blank"
               rel="noopener"
               className="font-bold"

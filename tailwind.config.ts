@@ -3,7 +3,6 @@ module.exports = {
   content: [
     "./node_modules/flowbite-react/**/*.js",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -17,9 +16,9 @@ module.exports = {
         xss: "13px",
       },
       fontFamily: {
-        Almarai: ["Almarai"],
-        Cairo: ["Cairo"],
-        IBM: ["IBM Plex Sans Arabic"],
+        Almarai: ["var(--font-almarai)"],
+        Cairo: ["var(--font-cairo)"],
+        IBM: ["var(--font-ibm)"],
       },
     },
   },
