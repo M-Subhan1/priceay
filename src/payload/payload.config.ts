@@ -6,9 +6,15 @@ import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { Brands } from "./collections/brands";
 import { Products } from "./collections/products";
 import { Stores } from "./collections/stores";
+import { StoresList } from "./globals/stores-list";
+import { ContactUs } from "./globals/contact-us";
+import { PrivacyPolicy } from "./globals/privacy-policy";
+import { TermsAndConditions } from "./globals/terms-and-conditions";
+
 import Summary from "./views/summary";
 import CustomNav from "./components/after-nav";
 import Media from "./collections/media";
+
 
 // const storageAdapter = s3Adapter({
 //   config: {
@@ -50,6 +56,7 @@ export default buildConfig({
   ],
 
   collections: [Products, Brands, Stores, Media],
+  globals: [StoresList, ContactUs, PrivacyPolicy, TermsAndConditions],
   typescript: {
     outputFile: path.resolve(__dirname, "./payload-types.ts"),
   },

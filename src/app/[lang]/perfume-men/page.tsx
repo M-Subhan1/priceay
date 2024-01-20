@@ -25,6 +25,7 @@ interface Props {
     page: string;
   };
 }
+
 export default async function Page(props: Props) {
   const products = await getData(props.params);
 
