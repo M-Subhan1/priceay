@@ -2,7 +2,8 @@
 The Repository contains a freelance project completed for a client. It features a fullstack nextjs-payloadcms application to manage and create content for the pages.
 
 ## Tech Stack
-  - NextJS 
+  - NextJS
+  - TypeScript
   - TailwindCSS
   - PayloadCMS
   - S3 Bucket
