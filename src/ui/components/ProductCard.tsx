@@ -12,7 +12,7 @@ export default function ProductCard(props: { product: Product }) {
     (productImage.width || 300) / (productImage.height || 200);
 
   return (
-    <Link href={`/products/${product.slug}`} legacyBehavior>
+    <Link href={`/${lang}/products/${product.slug}`}>
       <div className="flex flex-col hover:cursor-pointer items-center justify-center">
         <div>
           {productImage.url ? (
@@ -29,7 +29,7 @@ export default function ProductCard(props: { product: Product }) {
           )}
         </div>
         <h3 className="text-center">
-          <Link href={`/products/${product.slug}`}>
+          <Link href={`/${lang}/products/${product.slug}`}>
             {lang === "en"
               ? product.nameEnglish.substring(0, 40)
               : product.nameArabic.substring(0, 40)}

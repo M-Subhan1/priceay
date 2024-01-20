@@ -9,7 +9,6 @@ type Params = {
 
 export const useProducts = ({ query }: Params) => {
   return useQuery({
-    enabled: !!query,
     queryKey: ["products", query],
     queryFn: async () => {
       if (!query) return Promise.resolve(null);

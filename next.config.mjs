@@ -10,6 +10,15 @@ const config = {
   images: {
     domains: ["localhost"],
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "/ar",
+        permanent: false,
+      },
+    ];
+  }
 };
 
 export default withPayload(config, {

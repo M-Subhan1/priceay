@@ -3,8 +3,14 @@ import { env } from "../../../../env.mjs";
 import { PayloadResponse } from "@/types";
 import Perfumes from "@/ui/views/perfumes";
 
-async function getData(params?: { pageNumber: string }) {
-  const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/api/products?where[]`);
+async function getData(params?: { page: string }) {
+  const pageNumber = parseInt(params?.page || "1");
+
+  const res = await fetch(
+    `${env.NEXT_PUBLIC_API_URL}/products?limit=25&where[gender][equals]=Unisex${
+      !isNaN(pageNumber) && `&page=${pageNumber}`
+    }`
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -15,11 +21,12 @@ async function getData(params?: { pageNumber: string }) {
 }
 
 interface Props {
-  productData: Product[];
+  params: {
+    page: string;
+  };
 }
-
-export default async function PerfumeMen(props: Props) {
-  const products = await getData();
+export default async function Page(props: Props) {
+  const products = await getData(props.params);
 
   return (
     <Perfumes

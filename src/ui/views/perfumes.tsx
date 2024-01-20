@@ -4,8 +4,9 @@ import { NextSeo } from "next-seo";
 import ProductCard from "../components/ProductCard";
 import { Product } from "@/payload/payload-types";
 import { useTranslation } from "@/providers/translation";
-import { Link } from "lucide-react";
 import { env } from "../../../env.mjs";
+import { usePagination } from "@/hooks/usePagination";
+import Link from "next/link";
 
 type Props = {
   products: Product[];
@@ -21,6 +22,10 @@ export default async function Perfumes({
   pageCount,
 }: Props) {
   const { dictionary, lang } = useTranslation();
+  const pages = usePagination({
+    page: currentPage,
+    total: pageCount,
+  });
 
   return (
     <>
@@ -33,7 +38,7 @@ export default async function Perfumes({
         }}
       />
       <div className="px-3">
-        <p className="text-3xl text-center ">{dictionary["perfume-men"]}</p>
+        <p className="text-3xl text-center ">{dictionary[slug]}</p>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 my-8">
           {products.map((product) => (
             <ProductCard product={product} key={product.id} />
@@ -41,16 +46,16 @@ export default async function Perfumes({
         </div>
       </div>
       <div className="flex gap-4 my-16 justify-center">
-        {[1, 2, 3].map((i) => (
-          <>
-            <div className="px-4 py-3 border">
-              <Link href={`/perfume-men/page/${i}`}>{i}</Link>
-            </div>
-          </>
+        {pages.map((i) => (
+          <div
+            key={i}
+            className={`px-4 py-3 border ${
+              currentPage === i && "border-purple-300"
+            }`}
+          >
+            <Link href={`/${lang}/${slug}?page=${i}`}>{i}</Link>
+          </div>
         ))}
-        <div className="px-4 py-3 border">
-          <Link href={`/perfume-men/page/${pageCount}`}>{pageCount}</Link>
-        </div>
       </div>
     </>
   );

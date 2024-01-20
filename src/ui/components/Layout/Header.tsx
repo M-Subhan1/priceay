@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "@/providers/translation";
-import { Locale, i18n } from "../../../../i18n-config";
+import { i18n } from "../../../../i18n-config";
 import { redirectedPathName } from "@/utils/redirected-pathname";
 
 export default function Header() {
@@ -28,7 +28,7 @@ export default function Header() {
     <header>
       <nav className="flex justify-between py-1 px-4 items-center     ">
         <div className="logo text-4xl ">
-          <Link href={"/"}>
+          <Link href={`/${lang}`}>
             <Image alt="logo" width={130} height={45} src={"/imgs/logo.png"} />
           </Link>
         </div>
@@ -103,8 +103,8 @@ export default function Header() {
         >
           {navBar.map((navlink) => (
             <Link
-              href={`${lang}/${navlink.slug}`}
-              key={`${lang}/${navlink.slug}`}
+              href={`/${lang}/${navlink.slug}`}
+              key={`/${lang}/${navlink.slug}`}
               className={"hover:underline py-2 border-b-2 md:border-b-0"}
             >
               {navlink.title}
