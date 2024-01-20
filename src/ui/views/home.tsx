@@ -12,7 +12,7 @@ const HomeView: NextPage = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchingByBrand, setIsSearchingByBrand] = useState(false);
   const [startsWith, setStartsWith] = useState<string>();
-  const { dictionary } = useTranslation();
+  const { dictionary, lang } = useTranslation();
 
   const brandsQuery = useBrands({
     startsWith,
@@ -109,11 +109,14 @@ const HomeView: NextPage = () => {
 
         {isSearchingByBrand && !brandsQuery.isLoading ? (
           <div className="flex flex-col gap-8 items-end justify-end">
-            {brandsQuery.data?.docs.map((b) => (
-              <div className="text-right" key={b.id}>
-                <Link href={`/brands/${b.slug}`}>{b.name}</Link>
-              </div>
-            ))}
+            {brandsQuery.data?.docs.map(
+              (b) =>
+                b.slug && (
+                  <div className="text-right" key={b.id}>
+                    <Link href={`/${lang}/brands/${b.slug}`}>{b.name}</Link>
+                  </div>
+                )
+            )}
           </div>
         ) : (
           brandsQuery.isLoading &&

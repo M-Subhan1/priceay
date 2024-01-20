@@ -6,9 +6,10 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import Header from "@/components/Layout/Header";
+import Analytics from "@/ui/components/Analytics";
+
 import { ParamsWithLang } from "@/types";
 import { PropsWithChildren } from "react";
-import Analytics from "@/ui/components/Analytics";
 import { TranslationProvider } from "@/providers/translation";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import { AppProvider } from "@/providers/app";

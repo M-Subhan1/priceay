@@ -1,3 +1,5 @@
+"use client"
+
 import { Product, Store } from "@/payload/payload-types";
 import { useTranslation } from "@/providers/translation";
 import Image from "next/image";

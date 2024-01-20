@@ -30,6 +30,7 @@ export default function SearchForm({
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search Products"
             className="w-full p-2.5 px-8 border border-black focus:border-purple-300 font-medium"
           />
         </div>

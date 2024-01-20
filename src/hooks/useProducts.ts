@@ -14,7 +14,7 @@ export const useProducts = ({ query }: Params) => {
       if (!query) return Promise.resolve(null);
 
       const response = await axios.get(
-        `/api/products?limit=25&page=1&where[name][like]=${query}`
+        `/api/products?limit=25&page=1&where[nameEnglish][like]=${query}`
       );
 
       return response.data as PayloadResponse<Product>;

@@ -40,8 +40,8 @@ export default async function Perfumes({
       <div className="px-3">
         <p className="text-3xl text-center ">{dictionary[slug]}</p>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 my-8">
-          {products.map((product) => (
-            <ProductCard product={product} key={product.id} />
+          {Array.from({ length: 25 }).map((_, idx) => (
+            <ProductCard product={products[0]!} key={idx} />
           ))}
         </div>
       </div>
