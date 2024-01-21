@@ -73,52 +73,48 @@ export const Products: CollectionConfig = {
       minRows: 1,
       fields: [
         {
-          name: "enabled",
-          label: "Enabled",
-          type: "radio",
-          defaultValue: "yes",
-          required: true,
-          options: [
-            {
-              label: "Yes",
-              value: "yes",
-            },
-            {
-              label: "No",
-              value: "no",
-            },
-          ],
-        },
-        {
           name: "name",
           label: "Name",
           type: "text",
           required: true,
         },
         {
-          name: "store",
-          label: "Store",
-          type: "relationship",
-          relationTo: "stores",
-        },
-        {
-          name: "link",
-          label: "Product Link",
-          type: "text",
-          required: true,
-          validate: validateUrl,
-        },
-        {
-          name: "price",
-          label: "Price",
-          type: "number",
-          required: true,
-        },
-        {
-          name: "sku",
-          label: "Product SKU",
-          type: "text",
-          required: true,
+          name: "stores",
+          type: "array",
+          minRows: 1,
+          fields: [
+            {
+              name: "name",
+              label: "Name",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "store",
+              label: "Store",
+              type: "relationship",
+              relationTo: "stores",
+            },
+            {
+              name: "link",
+              label: "Product Link",
+              type: "text",
+              required: true,
+              validate: validateUrl,
+            },
+            {
+              name: "price",
+              label: "Price",
+              type: "number",
+              required: true,
+            },
+            {
+              name: "sku",
+              label: "Product SKU",
+              type: "text",
+              required: true,
+            },
+          ],
         },
       ],
     },

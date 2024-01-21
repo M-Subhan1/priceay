@@ -10,23 +10,24 @@ import { StoresList } from "./globals/stores-list";
 import { ContactUs } from "./globals/contact-us";
 import { PrivacyPolicy } from "./globals/privacy-policy";
 import { TermsAndConditions } from "./globals/terms-and-conditions";
+import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
+import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 
 import Summary from "./views/summary";
 import CustomNav from "./components/after-nav";
 import Media from "./collections/media";
 
-
-// const storageAdapter = s3Adapter({
-//   config: {
-//     endpoint: process.env.S3_ENDPOINT,
-//     region: process.env.S3_REGION,
-//     credentials: {
-//       accessKeyId: process.env.S3_ACCESS_KEY!,
-//       secretAccessKey: process.env.S3_SECRET_KEY!,
-//     },
-//   },
-//   bucket: process.env.S3_BUCKET_NAME!,
-// });
+const storageAdapter = s3Adapter({
+  config: {
+    endpoint: process.env.S3_ENDPOINT,
+    region: process.env.S3_REGION,
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY!,
+      secretAccessKey: process.env.S3_SECRET_KEY!,
+    },
+  },
+  bucket: process.env.S3_BUCKET_NAME!,
+});
 
 export default buildConfig({
   db: mongooseAdapter({
@@ -46,13 +47,15 @@ export default buildConfig({
     },
   },
   plugins: [
-    // cloudStorage({
-    //   collections: {
-    //     media: {
-    //       adapter: storageAdapter,
-    //     },
-    //   },
-    // }),
+    cloudStorage({
+      collections: {
+        media: {
+          adapter: storageAdapter,
+          disablePayloadAccessControl: true,
+          disableLocalStorage: true,
+        },
+      },
+    }),
   ],
 
   collections: [Products, Brands, Stores, Media],

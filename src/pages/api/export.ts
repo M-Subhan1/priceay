@@ -37,16 +37,13 @@ export default async function handler(
     //   });
     // }
   } else if (req.method === "GET") {
-    const stores = await payload.find({
-      collection: "stores",
+    const data = await payload.find({
+      collection: "products",
+      limit: 2000,
+      depth: 0,
     });
 
-    const brands = await payload.find({
-      collection: "brands",
-      limit: 100,
-    });
-
-    return res.json({ stores, brands });
+    // const mongodb = 
   }
 
   return res.json({
