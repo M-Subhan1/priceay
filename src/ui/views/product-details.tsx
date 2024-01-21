@@ -22,9 +22,17 @@ export default function ProductDetails({ product }: Props) {
   const [isVisible, setIsVisible] = useState(false);
   const [variantIndex, setVariantIndex] = useState(0);
 
+  console.log(product.variants);
+
   const variants = product.variants;
   const brand = product.brand as Brand;
-  const selectedVariant = product.variants[variantIndex]!;
+  const selectedVariant = product.variants.at(variantIndex)!;
+  const sortedStores =
+    selectedVariant?.stores.sort((a, b) => a.price - b.price) || [];
+
+  const stores = sortedStores
+    .filter((s) => s.enabled)
+    .concat(sortedStores.filter((s) => !s.enabled));
 
   const diff =
     Math.abs(Date.now() - new Date(product.updatedAt).getTime()) / 36e5;
@@ -151,7 +159,11 @@ export default function ProductDetails({ product }: Props) {
             ))}
           </div>
         </div>
-        <ProductAction selectedVariant={selectedVariant} />
+
+        {stores.map((price) => (
+          <ProductAction key={price.id} price={price} />
+        ))}
+
         <p className="flex justify-end">
           {dictionary["updated"].replace("{{hours}}", lastUpdateAt)}
         </p>

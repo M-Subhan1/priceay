@@ -8,7 +8,7 @@ const config = {
   reactStrictMode: true,
   swcMinify: false,
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "us-southeast-1.linodeobjects.com"],
   },
   redirects: async () => {
     return [
@@ -18,7 +18,7 @@ const config = {
         permanent: false,
       },
     ];
-  }
+  },
 };
 
 export default withPayload(config, {
