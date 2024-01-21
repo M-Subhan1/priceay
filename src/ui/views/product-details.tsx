@@ -3,7 +3,6 @@
 import ProductAction from "@/components/ProductAction";
 import Image from "next/image";
 import React, { useState } from "react";
-import Popup from "@/components/Popup";
 import Link from "next/link";
 
 import { Swiper, SwiperSlide } from "swiper/react";

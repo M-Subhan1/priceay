@@ -1,6 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import getPayloadClient from "@/payload/payloadClient";
+
+type StoreSummary = {
+  storeId: string;
+  first: number;
+  second: number;
+  third: number;
+}[];
 
 const pagination = z.object({
   page: z.coerce.number().min(1).default(1),
@@ -11,9 +19,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const payload = await getPayloadClient();
+
   if (req.method === "GET") {
     const params = pagination.parse(req.query);
-    const data = await prisma.products.aggregateRaw({
+    const data = (await prisma.products.aggregateRaw({
       pipeline: [
         { $unwind: "$variants" },
         { $unwind: "$variants.stores" },
@@ -36,7 +46,6 @@ export default async function handler(
               storeId: "$sortedStores.store",
               rank: "$storeRank",
             },
-            store: { $first: "$sortedStores.name" },
             count: { $sum: 1 },
           },
         },
@@ -92,18 +101,34 @@ export default async function handler(
           },
         },
         {
-          $lookup: {
-            from: "stores", // The name of the new collection to join
-            localField: "storeId", // Field from the original collection
-            foreignField: "_id", // Field from the new collection to match
-            as: "store", // The array field where joined documents will be placed
-          },
+          $sort: { first: -1, second: -1, third: -1, storeId: 1 },
         },
         { $skip: params.limit * (params.page - 1) },
         { $limit: params.limit },
       ],
+    })) as unknown as StoreSummary;
+
+    const stores = await payload.find({
+      collection: "stores",
+      depth: 0,
+      where: {
+        and: [
+          {
+            id: {
+              in: data.map((d) => d.storeId),
+            },
+          },
+        ],
+      },
     });
 
-    return res.json({ data });
+    return res.json({
+      data: data.map((d) => ({
+        ...d,
+        store: stores.docs.find((s) => s.id === d.storeId),
+      })),
+    });
   }
+
+  return res.status(405).json({ message: "Method not allowed" });
 }

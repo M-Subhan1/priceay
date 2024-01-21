@@ -82,12 +82,14 @@ export const Products: CollectionConfig = {
           name: "stores",
           type: "array",
           minRows: 1,
+          required: true,
           fields: [
             {
-              name: "name",
-              label: "Name",
-              type: "text",
+              name: "enabled",
+              label: "Enabled",
+              type: "checkbox",
               required: true,
+              defaultValue: true,
             },
             {
               name: "store",

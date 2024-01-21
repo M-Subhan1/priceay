@@ -33,10 +33,14 @@ export interface Product {
   productImage: string | Media;
   variants: {
     name: string;
-    store?: (string | null) | Store;
-    link: string;
-    price: number;
-    sku: string;
+    stores: {
+      enabled: boolean;
+      store?: (string | null) | Store;
+      link: string;
+      price: number;
+      sku: string;
+      id?: string | null;
+    }[];
     id?: string | null;
   }[];
   updatedAt: string;

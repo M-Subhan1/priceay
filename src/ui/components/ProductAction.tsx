@@ -5,7 +5,7 @@ import { useTranslation } from "@/providers/translation";
 import Image from "next/image";
 import Link from "next/link";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 type Variant = Product["variants"][number];
 
@@ -17,10 +17,11 @@ export default function ProductAction({ selectedVariant }: Props) {
   const { dictionary, lang } = useTranslation();
   const [isCopied, setIsCopied] = useState(false);
 
-  const store = selectedVariant?.store as Store;
+  const storeObject = selectedVariant.stores.sort((a, b) => a.price - b.price);
+  const store = (storeObject.find((s) => s.enabled) || storeObject[0])
+    .store as Store;
   const storeImage = store.storeImage as Media;
   const aspectRatio = (storeImage.width || 80) / (storeImage.height || 40);
-
   const discountCode = store?.discountCode;
 
   const copyToClipboard = async () => {

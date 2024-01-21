@@ -1,55 +1,47 @@
+"use client";
+
 import { Gutter } from "payload/components/elements";
 import DefaultTemplate from "payload/dist/admin/components/templates/Default";
+import { LoadingOverlay } from "payload/dist/admin/components/elements/Loading";
 import { Table } from "payload/dist/admin/components/elements/Table";
+import { useEffect, useState } from "react";
+import { Loader } from "lucide-react";
 
 const Summary = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      const response = await fetch("/api/summary");
+      const { data } = await response.json();
+
+      console.log(data);
+
+      setData(data);
+      setIsLoading(false);
+    })();
+  }, []);
+
+  if (isLoading) return <LoadingOverlay />;
+
   return (
     <DefaultTemplate>
       <Gutter>
         <h1>Best Price Summary</h1>
         <Table
-          data={[
-            {
-              store: "Store 1",
-              first: 10,
-              second: 5,
-              third: 10,
-            },
-            {
-              store: "Store 2",
-              first: 10,
-              second: 5,
-              third: 10,
-            },
-            {
-              store: "Store 3",
-              first: 10,
-              second: 5,
-              third: 10,
-            },
-            {
-              store: "Store 4",
-              first: 10,
-              second: 5,
-              third: 10,
-            },
-            {
-              store: "Store 5",
-              first: 10,
-              second: 5,
-              third: 10,
-            },
-          ]}
+          data={data}
           columns={[
             {
               name: "Store Name",
               label: "Store",
-              accessor: "store",
+              accessor: "store.name",
               active: true,
               components: {
                 Heading: <>Store Name</>,
-                renderCell(_, data) {
-                  return <>{data}</>;
+                renderCell(data) {
+                  return <>{data.store.name}</>;
                 },
               },
             },

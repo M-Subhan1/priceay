@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+model brands {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt  Json?
+  /// Field referred in an index, but found no data to define the type.
+  name       String?  @unique(map: "name_1")
+  /// Field referred in an index, but found no data to define the type.
+  slug       String?
+  /// Field referred in an index, but found no data to define the type.
+  startsWith Json?
+
+  @@index([createdAt], map: "createdAt_1")
+  @@index([startsWith], map: "startsWith_1")
+  @@index([slug], map: "slug_1")
+}
+
+model globals {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model media {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt DateTime?
+  /// Field referred in an index, but found no data to define the type.
+  filename  String?  @unique(map: "filename_1")
+
+  @@index([createdAt], map: "createdAt_1")
+}
+
+model payload_migrations {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt DateTime?
+
+  @@index([createdAt], map: "createdAt_1")
+  @@map("payload-migrations")
+}
+
+model payload_preferences {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt DateTime?
+
+  @@index([createdAt], map: "createdAt_1")
+  @@map("payload-preferences")
+}
+
+model products {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt   DateTime?
+  /// Field referred in an index, but found no data to define the type.
+  nameArabic  String?
+  /// Field referred in an index, but found no data to define the type.
+  nameEnglish String?
+  /// Field referred in an index, but found no data to define the type.
+  slug        String?
+
+  @@index([createdAt], map: "createdAt_1")
+  @@index([nameEnglish], map: "nameEnglish_1")
+  @@index([nameArabic], map: "nameArabic_1")
+  @@index([slug], map: "slug_1")
+}
+
+model stores {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt Json?
+  /// Field referred in an index, but found no data to define the type.
+  name      String?  @unique(map: "name_1")
+
+  @@index([createdAt], map: "createdAt_1")
+}
+
+model users {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int      @map("__v")
+  createdAt     DateTime @db.Date
+  email         String   @unique(map: "email_1")
+  hash          String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  lockUntil     Json?
+  loginAttempts Int
+  salt          String
+  updatedAt     DateTime @db.Date
+
+  @@index([createdAt], map: "createdAt_1")
+}
