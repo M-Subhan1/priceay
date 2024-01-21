@@ -8,7 +8,7 @@ const config = {
   reactStrictMode: true,
   swcMinify: false,
   images: {
-    domains: ["localhost", "us-southeast-1.linodeobjects.com"],
+    domains: ["localhost", "s3.ap-southeast-1.amazonaws.com"],
   },
   redirects: async () => {
     return [

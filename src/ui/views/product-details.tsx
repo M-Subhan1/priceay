@@ -22,8 +22,6 @@ export default function ProductDetails({ product }: Props) {
   const [isVisible, setIsVisible] = useState(false);
   const [variantIndex, setVariantIndex] = useState(0);
 
-  console.log(product.variants);
-
   const variants = product.variants;
   const brand = product.brand as Brand;
   const selectedVariant = product.variants.at(variantIndex)!;
@@ -60,45 +58,27 @@ export default function ProductDetails({ product }: Props) {
         }}
       />
       <div className={`px-3 `}>
-        <div className="flex justify-center product">
-          <Swiper
-            modules={[Scrollbar]}
-            spaceBetween={50}
-            slidesPerView={1}
-            scrollbar={{ draggable: true }}
-          >
-            <SwiperSlide>
-              <Image
-                alt={
-                  (product.productImage as Media).alt ||
-                  `${product.nameEnglish} Image`
-                }
-                src={(product.productImage as Media).url!}
-                height={250}
-                objectFit="contain"
-                width={200}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                alt={
-                  (product.productImage as Media).alt ||
-                  `${product.nameEnglish} Image`
-                }
-                src={(product.productImage as Media).url!}
-                height={250}
-                objectFit="contain"
-                width={200}
-              />
-            </SwiperSlide>
-          </Swiper>
+        <div className="flex justify-center product mt-6">
+          <Image
+            alt={
+              (product.productImage as Media).alt ||
+              `${product.nameEnglish} Image`
+            }
+            src={(product.productImage as Media).url!}
+            height={250}
+            objectFit="contain"
+            width={200}
+          />
         </div>
         <div className="flex flex-col  justify-end items-end ">
           <h1 className="text-xl ">
             {lang === "ar" ? product.nameArabic : product.nameEnglish}
           </h1>
           <div className="flex w-full items-center justify-between">
-            <div onClick={() => toggleFavorite(product.id)} className="transp">
+            <div
+              onClick={() => toggleFavorite(product.id)}
+              className="transp cursor-pointer"
+            >
               {isFavorite(product.id) ? (
                 <>
                   <svg

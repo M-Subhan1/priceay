@@ -28,6 +28,8 @@ export default function ProductAction({ price }: Props) {
     }
   };
 
+  console.log(store);
+
   return (
     <>
       <section className="border border-gray-500 my-2">

@@ -5,7 +5,7 @@ import { PayloadResponse } from "@/types";
 
 async function getData(params: { slug: string }) {
   const res = await fetch(
-    `${env.NEXT_PUBLIC_API_URL}/products?limit=1&where[gender][equals]=Male&page=1&depth=1`
+    `${env.NEXT_PUBLIC_API_URL}/products?limit=1&where[slug][equals]=${params.slug}&page=1&depth=2`
   );
 
   if (!res.ok) {

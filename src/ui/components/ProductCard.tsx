@@ -19,7 +19,7 @@ export default function ProductCard(props: { product: Product }) {
         <div>
           {productImage.url ? (
             <Image
-              src={"/perfume.png"}
+              src={productImage.url}
               objectFit="contain"
               alt={productImage.alt || `${product.nameEnglish} Image`}
               className="align-middle"
