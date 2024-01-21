@@ -1,11 +1,12 @@
-import Link from "next/link";
 import NavGroup from "payload/dist/admin/components/elements/NavGroup";
 
 export default function CustomNav() {
   return (
     <>
       <NavGroup label="Pages">
-        <Link href="/admin/views/summary">Summary</Link>
+        <a href={"/admin/views/summary"} target="_blank">
+          Summary
+        </a>
       </NavGroup>
     </>
   );

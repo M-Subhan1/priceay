@@ -5,10 +5,9 @@ import DefaultTemplate from "payload/dist/admin/components/templates/Default";
 import { LoadingOverlay } from "payload/dist/admin/components/elements/Loading";
 import { Table } from "payload/dist/admin/components/elements/Table";
 import { useEffect, useState } from "react";
-import { Loader } from "lucide-react";
 
 const Summary = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -17,17 +16,14 @@ const Summary = () => {
       const response = await fetch("/api/summary");
       const { data } = await response.json();
 
-      console.log(data);
-
       setData(data);
       setIsLoading(false);
     })();
   }, []);
 
-  if (isLoading) return <LoadingOverlay />;
-
   return (
     <DefaultTemplate>
+      {isLoading && <LoadingOverlay />}
       <Gutter>
         <h1>Best Price Summary</h1>
         <Table
